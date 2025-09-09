@@ -1,6 +1,15 @@
+import { useState } from "react";
+
 const SignIn = () => {
+  const [user, setUser] = useState({ email: "", password: "" });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
   const handleLogin = (e) => {
     e.preventDefault();
+    console.log(user);
   };
   return (
     <div className="hero min-h-screen flex items-center justify-center">
@@ -8,9 +17,21 @@ const SignIn = () => {
         <div className="card-body">
           <form onSubmit={handleLogin} className="fieldset">
             <label className="label">Email</label>
-            <input type="email" className="input" placeholder="Email" />
+            <input
+              onChange={handleChange}
+              type="email"
+              className="input"
+              placeholder="Email"
+              name="email"
+            />
             <label className="label">Password</label>
-            <input type="password" className="input" placeholder="Password" />
+            <input
+              onChange={handleChange}
+              type="password"
+              className="input"
+              placeholder="Password"
+              name="password"
+            />
             <div>
               <a className="link link-hover">Forgot password?</a>
             </div>
