@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const SignIn = () => {
   const [user, setUser] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,6 +35,11 @@ const SignIn = () => {
             />
             <div>
               <a className="link link-hover">Forgot password?</a>
+            </div>
+            <div className="relative mb-1">
+              {error && (
+                <p className="absolute font-bold text-red-600">hello</p>
+              )}{" "}
             </div>
             <button className="btn btn-neutral mt-4">Login</button>
           </form>
