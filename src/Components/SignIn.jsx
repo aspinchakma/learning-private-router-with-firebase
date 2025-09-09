@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Auth/Context";
 
 const SignIn = () => {
-  const [user, setUser] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const { user, setUser } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

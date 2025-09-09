@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../Auth/Context";
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
   const links = (
     <>
       <li>
@@ -48,6 +51,7 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
+        {user && <p>{user?.name}</p>}
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}

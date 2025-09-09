@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Auth/Context";
 
 const SignUp = () => {
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const { user, setUser } = useContext(AuthContext);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -10,7 +11,7 @@ const SignUp = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const handleLogin = (e) => {
+  const handleRegisterForm = (e) => {
     e.preventDefault();
 
     console.log(user);
@@ -19,7 +20,7 @@ const SignUp = () => {
     <div className="hero min-h-screen flex items-center justify-center">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <div className="card-body">
-          <form onSubmit={handleLogin} className="fieldset">
+          <form onSubmit={handleRegisterForm} className="fieldset">
             <label className="label">Full Name</label>
             <input
               onChange={handleChange}
