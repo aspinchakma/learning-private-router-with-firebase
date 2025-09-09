@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -24,6 +25,7 @@ const SignIn = () => {
               className="input"
               placeholder="Email"
               name="email"
+              required
             />
             <label className="label">Password</label>
             <input
@@ -32,6 +34,7 @@ const SignIn = () => {
               className="input"
               placeholder="Password"
               name="password"
+              required
             />
             <div>
               <a className="link link-hover">Forgot password?</a>
@@ -43,6 +46,12 @@ const SignIn = () => {
             </div>
             <button className="btn btn-neutral mt-4">Login</button>
           </form>
+          <p className="text-center">
+            Dont Have an account?{" "}
+            <Link to={`/signup`} className={`font-bold underline`}>
+              Register
+            </Link>
+          </p>
         </div>
       </div>
     </div>

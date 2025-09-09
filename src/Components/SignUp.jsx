@@ -1,7 +1,70 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 const SignUp = () => {
+  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    console.log(user);
+  };
   return (
-    <div>
-      <h2>This is Sign Up</h2>
+    <div className="hero min-h-screen flex items-center justify-center">
+      <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card-body">
+          <form onSubmit={handleLogin} className="fieldset">
+            <label className="label">Full Name</label>
+            <input
+              onChange={handleChange}
+              type="text"
+              className="input"
+              placeholder="Full Name"
+              name="name"
+              required
+            />
+            <label className="label">Email</label>
+            <input
+              onChange={handleChange}
+              type="email"
+              className="input"
+              placeholder="Email"
+              name="email"
+              required
+            />
+            <label className="label">Password</label>
+            <input
+              onChange={handleChange}
+              type="password"
+              className="input"
+              placeholder="Password"
+              name="password"
+              required
+            />
+            <div>
+              <a className="link link-hover">Forgot password?</a>
+            </div>
+            <div className="relative mb-1">
+              {error && (
+                <p className="absolute font-bold text-red-600">hello</p>
+              )}{" "}
+            </div>
+            <button className="btn btn-neutral mt-4">Login</button>
+          </form>
+          <p className="text-center">
+            Already have an account?{" "}
+            <Link to={`/signin`} className={`font-bold underline`}>
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
