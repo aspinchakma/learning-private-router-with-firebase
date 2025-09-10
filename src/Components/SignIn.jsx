@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase.init";
 
 const SignIn = () => {
@@ -13,6 +13,7 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +36,7 @@ const SignIn = () => {
           setError("Please Verify Your Email Then login");
         }
         e.target.reset();
+        navigate("/orders");
       })
       .catch((err) => setError(err.code));
   };
