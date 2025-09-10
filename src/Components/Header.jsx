@@ -1,6 +1,8 @@
+import { signOut } from "firebase/auth";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../Auth/Context";
+import { auth } from "../firebase.init";
 
 const Header = () => {
   const { user } = useContext(AuthContext);
@@ -17,6 +19,9 @@ const Header = () => {
       </li>
     </>
   );
+  const handleSignOutUser = () => {
+    signOut(auth);
+  };
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -50,8 +55,16 @@ const Header = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end">
-        {user && <p>{user?.displayName}</p>}
+      <div className="navbar-end gap-2">
+        {user && <p className="font-bold">{user?.displayName}</p>}
+        <div>
+          <button
+            onClick={handleSignOutUser}
+            className="btn btn-error text-white"
+          >
+            Sign Out
+          </button>
+        </div>
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -65,23 +78,6 @@ const Header = () => {
               />
             </div>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
