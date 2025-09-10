@@ -1,6 +1,11 @@
+import {
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Auth/Context";
+import { auth } from "../firebase.init";
 
 const SignIn = () => {
   const [error, setError] = useState("");
@@ -16,7 +21,24 @@ const SignIn = () => {
   };
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(userSignInInfo);
+
+    // clearing erro
+    setError("");
+    signInWithEmailAndPassword(
+      auth,
+      userSignInInfo.email,
+      userSignInInfo.password
+    )
+      .then((result) => {
+        // send verification
+        if (!result.user.emailVerified) {
+          sendEmailVerification(auth.currentUser);
+          setError("Please Verify Your Email Then login");
+        } else {
+          setUser(result.user);
+        }
+      })
+      .catch((err) => setError(err.code));
   };
   return (
     <div className="hero min-h-screen flex items-center justify-center">
@@ -46,7 +68,7 @@ const SignIn = () => {
             </div>
             <div className="relative mb-1">
               {error && (
-                <p className="absolute font-bold text-red-600">hello</p>
+                <p className="absolute font-bold text-red-600">{error}</p>
               )}{" "}
             </div>
             <button className="btn btn-neutral mt-4">Login</button>

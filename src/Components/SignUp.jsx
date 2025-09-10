@@ -15,6 +15,7 @@ const SignUp = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     if (name === "password") {
       if (!/(?=.*[a-z])/.test(value)) {
         setError("at least one lower case");
@@ -48,14 +49,16 @@ const SignUp = () => {
         updateProfile(auth.currentUser, { displayName: userInfo.name })
           .then(() => {
             setUser(result.user);
-            console.log(result.user);
           })
           .catch((err) => {
             setError(err.code);
           });
       })
       .catch((err) => {
-        setError(err.code);
+        if (err.code === "auth/email-already-in-use") {
+          setError("Email Already Existed!");
+          e.target.email.focus();
+        }
       });
   };
   return (
