@@ -1,20 +1,43 @@
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Auth/Context";
+import { auth } from "../firebase.init";
 
 const SignUp = () => {
   const { user, setUser } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUserInfo({ ...userInfo, [name]: value });
   };
 
   const handleRegisterForm = (e) => {
     e.preventDefault();
-
-    console.log(user);
+    // clearing all field
+    setError("");
+    // creating user
+    createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
+      .then((result) => {
+        // updating current user information
+        updateProfile(auth.currentUser, { displayName: userInfo.name })
+          .then(() => {
+            setUser(result.user);
+            console.log(result.user);
+          })
+          .catch((err) => {
+            setError(err.code);
+          });
+      })
+      .catch((err) => {
+        setError(err.code);
+      });
   };
   return (
     <div className="hero min-h-screen flex items-center justify-center">
@@ -48,12 +71,9 @@ const SignUp = () => {
               name="password"
               required
             />
-            <div>
-              <a className="link link-hover">Forgot password?</a>
-            </div>
             <div className="relative mb-1">
               {error && (
-                <p className="absolute font-bold text-red-600">hello</p>
+                <p className="absolute font-bold text-red-600">{error}</p>
               )}{" "}
             </div>
             <button className="btn btn-neutral mt-4">Login</button>

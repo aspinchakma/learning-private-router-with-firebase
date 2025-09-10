@@ -51,7 +51,7 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-        {user && <p>{user?.name}</p>}
+        {user && <p>{user?.displayName}</p>}
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
