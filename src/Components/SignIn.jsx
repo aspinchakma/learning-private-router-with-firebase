@@ -3,14 +3,12 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../Auth/Context";
 import { auth } from "../firebase.init";
 
 const SignIn = () => {
   const [error, setError] = useState("");
-  const { setUser } = useContext(AuthContext);
   const [userSignInInfo, setUserSignInInfo] = useState({
     email: "",
     password: "",
@@ -35,8 +33,6 @@ const SignIn = () => {
         if (!result.user.emailVerified) {
           sendEmailVerification(auth.currentUser);
           setError("Please Verify Your Email Then login");
-        } else {
-          setUser(result.user);
         }
       })
       .catch((err) => setError(err.code));

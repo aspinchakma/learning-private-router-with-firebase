@@ -1,12 +1,16 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
+import { auth } from "../firebase.init";
 import { AuthContext } from "./Context";
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const [user, setUser] = useState({});
+  onAuthStateChanged(auth, (userInfo) => {
+    setUser(userInfo);
+  });
+  console.log(user);
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 };
 

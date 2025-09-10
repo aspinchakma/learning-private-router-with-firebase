@@ -1,11 +1,9 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../Auth/Context";
 import { auth } from "../firebase.init";
 
 const SignUp = () => {
-  const { setUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -44,12 +42,10 @@ const SignUp = () => {
     setError("");
     // creating user
     createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
-      .then((result) => {
+      .then(() => {
         // updating current user information
         updateProfile(auth.currentUser, { displayName: userInfo.name })
-          .then(() => {
-            setUser(result.user);
-          })
+          .then(() => {})
           .catch((err) => {
             setError(err.code);
           });
