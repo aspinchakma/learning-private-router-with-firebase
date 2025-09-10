@@ -36,7 +36,10 @@ const SignUp = () => {
   const handleRegisterForm = (e) => {
     e.preventDefault();
     // clearing all field
-
+    if (error.length) {
+      e.target.password.focus();
+      return;
+    }
     setError("");
     // creating user
     createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
