@@ -6,17 +6,22 @@ import { auth } from "../firebase.init";
 
 const Header = () => {
   const { user } = useContext(AuthContext);
+  console.log(user);
   const links = (
     <>
       <li>
         <NavLink to={`/`}>Home</NavLink>
       </li>
-      <li>
-        <NavLink to={`/signin`}>Login</NavLink>
-      </li>
-      <li>
-        <NavLink to={`/signup`}>Register</NavLink>
-      </li>
+      {!user && (
+        <li>
+          <NavLink to={`/signin`}>Login</NavLink>
+        </li>
+      )}
+      {!user && (
+        <li>
+          <NavLink to={`/signup`}>Register</NavLink>
+        </li>
+      )}
     </>
   );
   const handleSignOutUser = () => {
@@ -58,27 +63,31 @@ const Header = () => {
       <div className="navbar-end gap-2">
         {user && <p className="font-bold">{user?.displayName}</p>}
         <div>
-          <button
-            onClick={handleSignOutUser}
-            className="btn btn-error text-white"
-          >
-            Sign Out
-          </button>
+          {user && (
+            <button
+              onClick={handleSignOutUser}
+              className="btn btn-error text-white"
+            >
+              Sign Out
+            </button>
+          )}
         </div>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+        {user && (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
