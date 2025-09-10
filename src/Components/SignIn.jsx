@@ -1,5 +1,6 @@
 import {
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useContext, useState } from "react";
@@ -40,6 +41,12 @@ const SignIn = () => {
       })
       .catch((err) => setError(err.code));
   };
+
+  const handlePasswordReset = () => {
+    sendPasswordResetEmail(auth, userSignInInfo.email).then(() => {
+      setError("Password reset email sent!");
+    });
+  };
   return (
     <div className="hero min-h-screen flex items-center justify-center">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -64,7 +71,9 @@ const SignIn = () => {
               required
             />
             <div>
-              <a className="link link-hover">Forgot password?</a>
+              <a onClick={handlePasswordReset} className="link link-hover">
+                Forgot password?
+              </a>
             </div>
             <div className="relative mb-1">
               {error && (
