@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthProvider from "./Auth/AuthProvider.jsx";
 import Home from "./Components/Home.jsx";
+import Orders from "./Components/Orders.jsx";
+import PrivateRoute from "./Components/PrivateRoute.jsx";
 import Root from "./Components/Root.jsx";
 import SignIn from "./Components/SignIn.jsx";
 import SignUp from "./Components/SignUp.jsx";
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/orders",
+        element: (
+          <PrivateRoute>
+            <Orders />
+          </PrivateRoute>
+        ),
       },
     ],
   },

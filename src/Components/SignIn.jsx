@@ -34,6 +34,7 @@ const SignIn = () => {
           sendEmailVerification(auth.currentUser);
           setError("Please Verify Your Email Then login");
         }
+        e.target.reset();
       })
       .catch((err) => setError(err.code));
   };

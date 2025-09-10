@@ -12,6 +12,9 @@ const Header = () => {
       <li>
         <NavLink to={`/`}>Home</NavLink>
       </li>
+      <li>
+        <NavLink to={`/orders`}>Orders</NavLink>
+      </li>
       {!user && (
         <li>
           <NavLink to={`/signin`}>Login</NavLink>
