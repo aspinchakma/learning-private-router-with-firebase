@@ -17,11 +17,11 @@ const Header = () => {
           <NavLink to={`/signin`}>Login</NavLink>
         </li>
       )}
-      {!user && (
+      {/* {!user && (
         <li>
           <NavLink to={`/signup`}>Register</NavLink>
         </li>
-      )}
+      )} */}
     </>
   );
   const handleSignOutUser = () => {
@@ -62,6 +62,7 @@ const Header = () => {
       </div>
       <div className="navbar-end gap-2">
         {user && <p className="font-bold">{user?.displayName}</p>}
+        {user && <p className="font-bold">{user?.email}</p>}
         <div>
           {user && (
             <button
