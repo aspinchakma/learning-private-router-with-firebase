@@ -5,7 +5,7 @@ import { AuthContext } from "../Auth/Context";
 import { auth } from "../firebase.init";
 
 const SignUp = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -15,12 +15,28 @@ const SignUp = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "password") {
+      if (!/(?=.*[a-z])/.test(value)) {
+        setError("at least one lower case");
+      } else if (!/(?=.*[A-Z])/.test(value)) {
+        setError("at least one upper case");
+      } else if (!/(?=.*\d)/.test(value)) {
+        setError("at least one digit");
+      } else if (!/(?=.*[!@#$%^&*(),.?":{}|<>])/.test(value)) {
+        setError("at least one Special characters");
+      } else if (!/[a-zA-Z0-9]{8,}/.test(value)) {
+        setError("at least 8 characters");
+      } else {
+        setError("");
+      }
+    }
     setUserInfo({ ...userInfo, [name]: value });
   };
 
   const handleRegisterForm = (e) => {
     e.preventDefault();
     // clearing all field
+
     setError("");
     // creating user
     createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
