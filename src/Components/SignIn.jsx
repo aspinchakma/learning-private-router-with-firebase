@@ -4,15 +4,19 @@ import { AuthContext } from "../Auth/Context";
 
 const SignIn = () => {
   const [error, setError] = useState("");
-  const { user, setUser } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
+  const [userSignInInfo, setUserSignInInfo] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUserSignInInfo({ ...userSignInInfo, [name]: value });
   };
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(user);
+    console.log(userSignInInfo);
   };
   return (
     <div className="hero min-h-screen flex items-center justify-center">
